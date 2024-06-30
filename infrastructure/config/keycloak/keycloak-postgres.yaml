@@ -1,0 +1,7 @@
+auth:
+  database: keycloak
+  password: keycloak
+  username: keycloak
+image:
+  pullPolicy: Always
+  tag: "14"

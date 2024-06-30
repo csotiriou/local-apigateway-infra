@@ -1,0 +1,47 @@
+# Default values for keycloakproxy.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+replicaCount: 1
+
+proxy:
+  hostHeaderEnabled: true
+  host: apisix.openid.local.k8s
+  listeningPort: 8081
+  servicePort: 80
+
+destination:
+  service: main-keycloak-service
+  namespace: keycloak
+  port: 8080
+  scheme: http
+
+#fullUrl: "{{.Values.destination.scheme}}://{{.Values.destination.service}}.{{.Values.destination.namespace}}.svc.cluster.local:{{.Values.destination.port}}"
+
+image:
+  repository: nginx
+  pullPolicy: IfNotPresent
+  # Overrides the image tag whose default is the chart appVersion.
+  tag: ""
+
+
+
+resources:
+ limits:
+   cpu: 100m
+   memory: 128Mi
+ requests:
+   cpu: 100m
+   memory: 128Mi
+
+autoscaling:
+  enabled: false
+  minReplicas: 1
+  maxReplicas: 100
+  targetCPUUtilizationPercentage: 80
+
+nodeSelector: {}
+
+tolerations: []
+
+affinity: {}

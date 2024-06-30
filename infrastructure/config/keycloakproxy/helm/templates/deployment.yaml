@@ -1,0 +1,27 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: keycloak-proxy
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: nginx-proxy
+  template:
+    metadata:
+      labels:
+        app: nginx-proxy
+    spec:
+      containers:
+        - name: nginx-proxy
+          image: nginx:latest
+          ports:
+            - containerPort: {{.Values.proxy.listeningPort}}
+          volumeMounts:
+            - name: nginx-config-volume
+              mountPath: /etc/nginx
+          resources: {{.Values.resources | toYaml | nindent 12}}
+      volumes:
+        - name: nginx-config-volume
+          configMap:
+            name: keycloak-proxy-config

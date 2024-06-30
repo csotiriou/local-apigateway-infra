@@ -1,0 +1,5 @@
+###
+GET http://k8s.orb.local/openid-connect/.well-known/openid-configuration
+
+###
+GET http://k8s.orb.local/echo1

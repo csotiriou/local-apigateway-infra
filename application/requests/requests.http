@@ -1,0 +1,14 @@
+### Authenticate with client credentials
+POST http://k8s.orb.local/openid-connect/auth/token
+Content-Type: application/x-www-form-urlencoded; charset=utf-8
+Host: k8s.orb.local
+
+client_id=testclient&client_secret=j6bTL362xg6R48OOlL9TwUqMLDs63wDd&grant_type=client_credentials&scope=openid
+
+> {%
+client.global.set("access_token", response.body.access_token);
+%}
+
+### Authenticated request
+GET http://k8s.orb.local/protected/echo1
+Authorization: Bearer {{access_token}}l
