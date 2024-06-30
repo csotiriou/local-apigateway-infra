@@ -16,21 +16,9 @@ resource "kubernetes_config_map_v1" "custom_response_plugin_configmap" {
   }
 }
 
-
-resource "kubernetes_config_map_v1" "add-clientid-header_configmap" {
-  metadata {
-    name = "add-clientid-header-config"
-    namespace = kubernetes_namespace_v1.apisix_namespace.metadata.0.name
-  }
-  data = {
-    "add-clientid-header.lua" = file("${path.module}/config/apisix/add-clientid-header.lua")
-  }
-}
-
 resource "helm_release" "apisix_helm" {
   depends_on = [
-    kubernetes_config_map_v1.custom_response_plugin_configmap,
-    kubernetes_config_map_v1.add-clientid-header_configmap
+    kubernetes_config_map_v1.custom_response_plugin_configmap
   ]
   chart = "${path.module}/config/apisix/apisix-helm-chart-master/charts/apisix"
   name  = "apisix"
