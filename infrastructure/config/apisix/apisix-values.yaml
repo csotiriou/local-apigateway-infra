@@ -27,13 +27,6 @@ customPlugins:
         mounts:
           - key: "custom-response.lua"
             path: "/usr/local/apisix/apisix/plugins/custom-response.lua"
-    - name: "add-clientid-header"
-      attrs: {}
-      configMap:
-        name: "add-clientid-header-config"
-        mounts:
-          - key: "add-clientid-header.lua"
-            path: "/usr/local/apisix/apisix/plugins/add-clientid-header.lua"
 
 
 plugins:                           # plugin list (sorted by priority)
