@@ -1,2 +1,5 @@
 .idea
-infrastructure/.terraform
+application/terraform.tfstate*
+application/.terraform*
+infrastructure/terraform.tfstate*
+infrastructure/.terraform*

@@ -1,7 +1,3 @@
-# add pipefail support for default shell
-SHELL := /bin/bash -o pipefail
-#######################################
-######################################
 apisix_dep_update:
 	cd "config/apisix/apisix-helm-chart-master/charts/apisix" && helm dependency update
 

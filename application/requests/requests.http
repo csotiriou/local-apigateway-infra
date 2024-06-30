@@ -1,14 +1,32 @@
+@domain = k8s.orb.local:80
+@client_id = testclient
+@client_secret = j6bTL362xg6R48OOlL9TwUqMLDs63wDd
+
+### Retrieve the OpenID configuration
+GET http://{{domain}}/openid-connect/.well-known/openid-configuration
+
+### Unauthenticated Echo1
+GET http://{{domain}}/echo1
+
 ### Authenticate with client credentials
-POST http://k8s.orb.local/openid-connect/auth/token
+POST http://{{domain}}/openid-connect/auth/token
 Content-Type: application/x-www-form-urlencoded; charset=utf-8
 Host: k8s.orb.local
 
-client_id=testclient&client_secret=j6bTL362xg6R48OOlL9TwUqMLDs63wDd&grant_type=client_credentials&scope=openid
+client_id = {{client_id}} &
+client_secret = {{client_secret}} &
+grant_type = client_credentials &
+scope = openid
 
 > {%
-client.global.set("access_token", response.body.access_token);
+client.global.clear("local_access_token")
+client.global.set("local_access_token", response.body.access_token);
 %}
 
 ### Authenticated request
-GET http://k8s.orb.local/protected/echo1
-Authorization: Bearer {{access_token}}l
+GET http://{{domain}}/protected/echo1
+Authorization: Bearer {{local_access_token}}
+
+> {%
+    client.global.clear("local_access_token")
+%}
